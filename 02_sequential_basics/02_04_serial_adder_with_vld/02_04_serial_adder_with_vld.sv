@@ -4,13 +4,13 @@
 
 module serial_adder_with_vld
 (
-  input  clk,
-  input  rst,
-  input  vld,
-  input  a,
-  input  b,
-  input  last,
-  output sum
+  input logic clk,
+  input logic rst,
+  input logic vld,
+  input logic a,
+  input logic  b,
+  input logic last,
+  output logic sum
 );
 
   // Task:
@@ -28,6 +28,18 @@ module serial_adder_with_vld
   // only if vld is also high, otherwise last should be ignored.
   //
   // When rst is high, the module should reset its internal state.
-
+  logic carry_i;
+  logic carry_o;
+  assign {carry_o, sum} = a+b+carry_i;
+  
+  always_ff @(posedge clk) begin
+    if (rst) carry_i <= '0;
+    else if(vld) begin
+      if(last)
+        carry_i <= '0;
+      else
+        carry_i <= carry_o;
+    end
+  end
 
 endmodule

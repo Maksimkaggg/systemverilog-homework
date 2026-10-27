@@ -1,6 +1,6 @@
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // Example
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 module posedge_detector (input clk, rst, a, output detected);
 
@@ -24,13 +24,27 @@ endmodule
 // Task
 //----------------------------------------------------------------------------
 
-module one_cycle_pulse_detector (input clk, rst, a, output detected);
+module one_cycle_pulse_detector (
+    input  logic clk,
+    input  logic rst,
+    input  logic a,
+    output logic detected
+);
+    logic [1:0] a_r1;  
 
-  // Task:
-  // Create an one cycle pulse (010) detector.
-  //
-  // Note:
-  // See the testbench for the output format ($display task).
+    always_ff @(posedge clk)
+        if (rst)
+            a_r1 <= 2'b0;
+        else
+            a_r1 <= {a_r1[0], a}; 
+
+
+    assign detected = (a_r1 == 2'b01) && (a == 1'b0);
+
+
+    
+
+
 
 
 endmodule
