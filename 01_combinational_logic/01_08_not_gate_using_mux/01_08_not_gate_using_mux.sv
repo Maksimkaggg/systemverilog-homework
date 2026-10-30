@@ -32,6 +32,6 @@ mux not0(
           .d1(1'b0),
           .sel(i),
           .y(o)
-);
+        );
 
 endmodule

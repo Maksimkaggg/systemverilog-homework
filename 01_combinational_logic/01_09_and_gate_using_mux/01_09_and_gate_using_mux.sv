@@ -30,12 +30,12 @@ ab
 10
 11
   */
-mux and0(
-          .d0(1'b0),
-          .d1(b),
-          .sel(a),
-          .y(o)
-);
+  mux and0(
+            .d0(1'b0),
+            .d1(b),
+            .sel(a),
+            .y(o)
+          );
 
 
 endmodule

@@ -31,14 +31,19 @@ module mux_4_1
   // Task:
   // Using code for mux_2_1 as an example,
   // write code for 4:1 mux using the "if" statement
-always_comb
-    if (sel == 2'b00)
+  always_comb begin
+    if (sel == 2'b00) begin
       y = d0;
-    else if (sel == 2'b01)
+    end
+    else if (sel == 2'b01) begin
       y = d1;
-    else if (sel == 2'b10)
+    end
+    else if (sel == 2'b10) begin
       y = d2;
-    else
+    end
+    else begin
       y = d3;
+    end
+  end
 
 endmodule
