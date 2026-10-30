@@ -25,23 +25,6 @@ module round_robin_arbiter_with_2_requests
 
 
 
-// преоритет меняется только при requests = 11
-// logic flag;
-// assign flag = requests[1] & requests[0];
-// logic queue;
-
-// assign grants = (requests == 2'b11) ? {requests[1] & queue, requests[0] & ~queue} : requests;
-
-
-
-// always_ff @(posedge clk) begin
-//     if (rst)
-//         queue <= '0;
-//     else if (flag) begin
-//         queue <= ~queue;
-//     end
-// end
-// приоритет будет меняться после каждого победителя
 
 logic flag;
 assign flag = requests[1] & requests[0];

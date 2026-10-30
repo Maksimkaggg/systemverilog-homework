@@ -4,11 +4,11 @@
 
 module serial_adder_with_vld
 (
-  input logic clk,
-  input logic rst,
-  input logic vld,
-  input logic a,
-  input logic  b,
+  input logic  clk,
+  input logic  rst,
+  input logic  vld,
+  input logic    a,
+  input logic    b,
   input logic last,
   output logic sum
 );
@@ -30,7 +30,7 @@ module serial_adder_with_vld
   // When rst is high, the module should reset its internal state.
   logic carry_i;
   logic carry_o;
-  assign {carry_o, sum} = a+b+carry_i;
+  assign {carry_o, sum} = a + b + carry_i;
   
   always_ff @(posedge clk) begin
     if (rst) carry_i <= '0;

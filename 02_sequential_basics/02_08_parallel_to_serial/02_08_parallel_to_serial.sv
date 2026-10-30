@@ -13,7 +13,7 @@ module parallel_to_serial
     input                      parallel_valid,
     input        [width - 1:0] parallel_data,
 
-    output                     busy,
+    output                             busy,
     output logic               serial_valid,
     output logic               serial_data
 );
@@ -28,6 +28,40 @@ module parallel_to_serial
     //
     // Note:
     // Check the waveform diagram in the README for better understanding.
+    logic [width - 1 : 0] parallel_data_r; 
+    localparam COUNT_WIDTH = $clog2(width);
+    logic [COUNT_WIDTH  : 0] count;
+    assign busy = (parallel_valid | count > 0);
+    assign serial_valid = busy;
+
+
+    always_ff @(posedge clk) begin
+        if(rst) begin
+            count <= '0;
+        end
+        else if (parallel_valid) begin
+            count <= width - 1;
+        end
+        else if (count > 0) begin
+            count <= count - 1'b1;
+        end
+    end
+
+
+    assign serial_data = parallel_valid ? parallel_data[0] : parallel_data_r[0]; 
+
+
+    always_ff @(posedge clk) begin
+        if(rst) begin
+            parallel_data_r <= '0;
+        end
+        else if (parallel_valid) begin
+            parallel_data_r <= parallel_data >> 1'b1;
+        end       
+        else if (count > 0) begin
+            parallel_data_r <= parallel_data_r >> 1'b1;
+        end
+    end
 
 
 endmodule

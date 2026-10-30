@@ -29,28 +29,47 @@ module serial_to_parallel
     //logic [$clog2(width) - 1 : 0] count;
     localparam COUNT_WIDTH = $clog2(width);
     logic [COUNT_WIDTH - 1 : 0] count;
-always_ff @(posedge clk) begin
-    if (rst) begin
-      parallel_data <= '0;
-      count <= '0;
-      parallel_valid <= '0;
-    end
-    else if (serial_valid) begin
-        parallel_data <= {serial_data, parallel_data[width - 1 : 1]};
-        if (count == (width - 1)) begin
-            parallel_valid <= '1;
+
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
             count <= '0;
         end
-        else begin
-            count <= count + 1'b1;
-            parallel_valid <= '0;
-
+        else if (serial_valid) begin
+            if (count == (width - 1)) begin
+                count <= '0;
+            end
+            else begin
+                count <= count + 1'b1;
+            end
         end
     end
-    else begin
-        parallel_valid <= '0;
-    end
-      
-end
 
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            parallel_valid <= '0;
+        end
+        else if (serial_valid) begin
+            if (count == (width - 1)) begin
+                parallel_valid <= '1;
+            end
+            else begin
+                parallel_valid <= '0;
+            end
+        end
+        else begin
+            parallel_valid <= '0;
+        end
+    end
+
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            parallel_data <= '0;
+        end
+        else if (serial_valid) begin
+            parallel_data <= {serial_data, parallel_data[width - 1 : 1]};
+        end
+    end
 endmodule

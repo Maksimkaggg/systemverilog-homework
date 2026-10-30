@@ -52,14 +52,17 @@ module serial_adder_using_logic_operations_only
   logic carry_i;
   wire carry_o;
 
- assign sum = a ^ b ^ carry_i;
- assign carry_o = (a & b) | (carry_i & (a ^ b));
+  assign sum = a ^ b ^ carry_i;
+  assign carry_o = (a & b) | (carry_i & (a ^ b));
 
   always_ff @ (posedge clk)
-    if (rst)
+    if (rst) begin
       carry_i <= '0;
-    else
+    end
+    else begin
       carry_i <= carry_o;
+    end
+
 
 
 endmodule
