@@ -22,7 +22,6 @@ module signed_add_with_overflow
   output [3:0] sum,
   output       overflow
 );
-
   // Task:
   //
   // Implement a module that adds two signed numbers
@@ -37,6 +36,13 @@ module signed_add_with_overflow
   // 4-bit maximum or minimum signed number.
   //
   // Otherwise the 'overflow' should be set to 0.
-
+  logic  [4:0] a_e, b_e, res;
+  assign a_e = $signed(a);
+  assign b_e = $signed(b);
+  assign res = a_e  + b_e;
+  assign sum = res[3:0];
+  assign overflow = res[4]^res[3];
+//TEST: extra argument ‘+’
+// на code2silicon прошло тесты
 
 endmodule
