@@ -2,10 +2,10 @@
 // Example
 //----------------------------------------------------------------------------
 
-module add
-(
-  input  [3:0] a, b,
-  output [3:0] sum
+module add (
+    input  [3:0] a,
+    b,
+    output [3:0] sum
 );
 
   assign sum = a + b;
@@ -16,11 +16,11 @@ endmodule
 // Task
 //----------------------------------------------------------------------------
 
-module signed_add_with_overflow
-(
-  input  [3:0] a, b,
-  output [3:0] sum,
-  output       overflow
+module signed_add_with_overflow (
+    input  [3:0] a,
+    b,
+    output [3:0] sum,
+    output       overflow
 );
   // Task:
   //
@@ -36,13 +36,13 @@ module signed_add_with_overflow
   // 4-bit maximum or minimum signed number.
   //
   // Otherwise the 'overflow' should be set to 0.
-  logic  [4:0] a_e, b_e, res;
-  assign a_e = $signed(a);
-  assign b_e = $signed(b);
-  assign res = a_e  + b_e;
-  assign sum = res[3:0];
-  assign overflow = res[4]^res[3];
-//TEST: extra argument ‘+’
-// на code2silicon прошло тесты
+  logic signed [4:0] a_e;
+  logic signed [4:0] b_e;
+  logic signed [4:0] sum_e;
 
+  assign a_e      = $signed(a);
+  assign b_e      = $signed(b);
+  assign sum_e    = a_e + b_e;
+  assign sum      = sum_e[3:0];
+  assign overflow = sum_e[4] ^ sum_e[3];
 endmodule
