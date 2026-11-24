@@ -26,9 +26,10 @@ module gearbox_1_to_2 #(
   // and valid 'vld' signals
   logic vld_2;
   logic [width - 1:0] down_data_r;
-  assign vld_2 = (counter_1[0] & up_vld) ? 1'b1 : 1'b0;
-
   logic [1:0] counter_1;
+
+  assign vld_2 = counter_1[0] & up_vld;
+
   always_ff @(posedge clk) begin
     if (rst) begin
       counter_1 <= '0;
@@ -51,6 +52,6 @@ module gearbox_1_to_2 #(
   end
 
   assign down_data = (vld_2) ? {down_data_r, up_data} : '0;
-  assign down_vld  = (vld_2) ? 1'b1 : 1'b0;
+  assign down_vld  = vld_2;
 
 endmodule

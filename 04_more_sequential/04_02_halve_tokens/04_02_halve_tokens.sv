@@ -17,9 +17,10 @@ module halve_tokens (
   // Exam 1
   // a -> 110_011_101_000_1111
   // b -> 010_001_001_000_0101
-  assign b = (counter_1[0] & a) ? 1'b1 : 1'b0;
-
   logic [1:0] counter_1;
+
+  assign b = counter_1[0] & a;
+
   always_ff @(posedge clk) begin
     if (rst) begin
       counter_1 <= '0;
